@@ -6,7 +6,7 @@ export const site = {
   name: "Cosco Overseas Education",
   shortName: "Cosco Overseas",
   tagline: "Your global education journey starts here",
-  CEO: "Ben Jaison",
+  founder: "Ben Jaison",
   phone: "+917902844844",
   phoneDial: "+917902844844",
   whatsapp: "917902844844",
@@ -15,7 +15,7 @@ export const site = {
     line: "Kottayam, Kerala, India",
     locality: "Kottayam",
     region: "Kerala",
-    mapsQuery: "Kottayam Kerala",
+    mapsQuery: "9.5951504,76.5291046",
   },
   social: {
     instagram: "https://www.instagram.com/cosco_overseas_education_?igsh=a244bjlhNXhiMHZr",
