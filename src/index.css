@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --ring: 209 10 18;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-white text-ink-800 font-sans antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+  ::selection {
+    @apply bg-brand-600 text-white;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3.5 py-1.5
+           text-xs font-semibold uppercase tracking-[0.14em] text-brand-700;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all
+           duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2;
+  }
+  .btn-primary {
+    @apply btn relative overflow-hidden bg-brand-600 px-6 py-3 text-white shadow-glow hover:bg-brand-700 hover:-translate-y-0.5 active:translate-y-0;
+  }
+  .btn-primary::after {
+    content: "";
+    @apply pointer-events-none absolute inset-0 -translate-x-full skew-x-12 bg-gradient-to-r from-transparent via-white/30 to-transparent;
+    transition: transform 0.7s ease;
+  }
+  .btn-primary:hover::after {
+    @apply translate-x-full;
+  }
+  .btn-ghost {
+    @apply btn border border-ink-200 bg-white px-6 py-3 text-ink-900 hover:border-ink-900 hover:-translate-y-0.5;
+  }
+  .btn-dark {
+    @apply btn bg-ink-900 px-6 py-3 text-white hover:bg-ink-800 hover:-translate-y-0.5;
+  }
+  .card {
+    @apply rounded-3xl border border-ink-100 bg-white shadow-soft;
+  }
+  .glass {
+    @apply border border-white/20 bg-white/10 backdrop-blur-xl;
+  }
+  .link-underline {
+    @apply relative after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-0 after:bg-brand-600
+           after:transition-all after:duration-300 hover:after:w-full;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D10A12; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #AE0810; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
