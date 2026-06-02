@@ -38,12 +38,12 @@ jobs:
           username: ${{ secrets.PROD_USER }}
           password: ${{ secrets.PROD_PASSWORD }}
           script: |
-            docker pull ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-            docker stop cosco-overseas-frontend || true
-            docker rm cosco-overseas-frontend || true
-            docker run -d \
-              --name cosco-overseas-frontend \
+            sudo docker pull ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            sudo docker stop cosco-frontend || true
+            sudo docker rm cosco-frontend || true
+            sudo docker run -d \
+              --name cosco-frontend \
               --restart unless-stopped \
               -p 127.0.0.1:3000:80 \
               ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-            docker image prune -f
+            sudo docker image prune -f
