@@ -38,8 +38,17 @@ export const PRIZES = [
 
 // Options in the "preferred country" dropdown.
 export const COUNTRIES = [
-  "Not sure yet", "UK", "Canada", "Australia", "Germany",
-  "USA", "Ireland", "New Zealand", "France", "Other",
+  "Not sure yet",
+  // Major destinations
+  "UK", "USA", "Canada", "Australia", "New Zealand", "Ireland",
+  // Europe (incl. smaller / emerging study destinations)
+  "Germany", "France", "Netherlands", "Switzerland", "Sweden", "Finland",
+  "Denmark", "Austria", "Belgium", "Italy", "Spain", "Poland",
+  "Lithuania", "Latvia", "Estonia", "Malta", "Cyprus", "Moldova",
+  "Hungary", "Czech Republic",
+  // Others
+  "Singapore", "Mauritius", "Dubai (UAE)",
+  "Other",
 ];
 
 // WINNERS — on July 10 the team fills this in (lot number → prize),
