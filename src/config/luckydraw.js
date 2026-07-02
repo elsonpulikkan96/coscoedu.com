@@ -63,7 +63,8 @@ export const resultsAreLive = () => Date.now() >= RESULTS_DATE.getTime();
 // browser's localStorage as a local fallback so the staff CSV survives
 // a page refresh even if the network / Supabase is unavailable.
 export function saveEntry(entry) {
-  submitLuckyDrawEntry({
+  if (import.meta.env.DEV) console.log("[luckydraw] entry saved:", entry);
+  return submitLuckyDrawEntry({
     lot_number: entry.lot,
     name: entry.name,
     age: entry.age,
@@ -72,7 +73,6 @@ export function saveEntry(entry) {
     country: entry.country || null,
     course: entry.course || null,
   });
-  if (import.meta.env.DEV) console.log("[luckydraw] entry saved:", entry);
 }
 
 export function sendConfirmationEmail(entry) {

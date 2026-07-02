@@ -29,7 +29,7 @@ export function LuckyDrawProvider({ children }) {
   // Create an entry with a device-unique lot number. NOTE: on the live
   // site the backend should assign lot numbers so they're unique across
   // every device at the stall.
-  const register = useCallback((data) => {
+  const register = useCallback(async (data) => {
     const lots = new Set(entries.map((e) => e.lot));
     // 5-digit space (10000–99999) to cut collisions; capped retries so a
     // full local set can never spin the tab. Backend should still own the
@@ -39,9 +39,13 @@ export function LuckyDrawProvider({ children }) {
     do { lot = `${LOT_PREFIX}-${Math.floor(10000 + Math.random() * 90000)}`; tries += 1; }
     while (lots.has(lot) && tries < 50);
     const entry = { lot, ...data, time: new Date().toISOString() };
+    // Save to Supabase FIRST. A duplicate phone or email (enforced by unique
+    // indexes) returns HTTP 409, so we reject it before handing out a lot
+    // number — this works across every device at the stall.
+    const res = await saveEntry(entry);
+    if (res && res.status === 409) return { duplicate: true };
     persist([...entries, entry]);
-    saveEntry(entry); // backend hook (stub)
-    return entry;
+    return { entry };
   }, [entries, persist]);
 
   const clearEntries = useCallback(() => persist([]), [persist]);

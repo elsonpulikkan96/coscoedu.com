@@ -15,13 +15,14 @@ export default function RegistrationModal({ entries, onRegister, onClose, onResu
   const [errors, setErrors] = useState({});
   const [entry, setEntry] = useState(null);        // set once registered → shows the ticket
   const [emailStatus, setEmailStatus] = useState("");
+  const [busy, setBusy] = useState(false);
   const nameRef = useRef(null);
 
   useEffect(() => { nameRef.current?.focus(); }, []);
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
-  function submit() {
+  async function submit() {
     const name = form.name.trim();
     const age = parseInt(form.age, 10);
     const phone = form.phone.replace(/\D/g, "");
@@ -40,9 +41,17 @@ export default function RegistrationModal({ entries, onRegister, onClose, onResu
     setErrors(next);
     if (Object.keys(next).length) return;
 
-    const created = onRegister({ name, age, phone, email, country: form.country, course });
-    setEntry(created);
+    setBusy(true);
+    const result = await onRegister({ name, age, phone, email, country: form.country, course });
+    setBusy(false);
 
+    if (result?.duplicate) {
+      setErrors({ phone: "This phone or email is already registered — only one entry per person." });
+      return;
+    }
+
+    const created = result.entry;
+    setEntry(created);
     setEmailStatus("✉ Sending confirmation email…");
     sendConfirmationEmail(created).then(() => setEmailStatus(`✉ Confirmation sent to ${email}`));
   }
@@ -115,7 +124,9 @@ export default function RegistrationModal({ entries, onRegister, onClose, onResu
                 </div>
               </div>
 
-              <button className="ld-cta" onClick={submit}>Get my lot number →</button>
+              <button className="ld-cta" onClick={submit} disabled={busy}>
+                {busy ? "Checking…" : "Get my lot number →"}
+              </button>
               <button className="ld-linkbtn" onClick={onResults}>Already registered? <u>Check results</u></button>
             </div>
           ) : (

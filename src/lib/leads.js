@@ -27,9 +27,9 @@ async function insert(table, row) {
     if (!res.ok) {
       const error = await res.text();
       if (import.meta.env.DEV) console.error(`[leads] ${table} insert failed:`, error);
-      return { ok: false, error };
+      return { ok: false, status: res.status, error };
     }
-    return { ok: true };
+    return { ok: true, status: res.status };
   } catch (err) {
     if (import.meta.env.DEV) console.error(`[leads] ${table} network error:`, err);
     return { ok: false, error: String(err) };
