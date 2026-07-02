@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FiArrowRight, FiGift } from "react-icons/fi";
 import Reveal from "../ui/Reveal";
 import { useLuckyDraw } from "../luckydraw/context";
-import { PRIZES, RESULTS_DATE, RESULTS_DATE_LABEL, resultsAreLive } from "../../config/luckydraw";
+import { PRIZES, RESULTS_DATE_LABEL, RESULTS_DATE, resultsAreLive } from "../../config/luckydraw";
 
 function remain() {
   let ms = Math.max(0, RESULTS_DATE.getTime() - Date.now());
@@ -13,12 +13,8 @@ function remain() {
   return { d, h, m, s };
 }
 
-function Countdown() {
-  const [t, setT] = useState(remain());
-  useEffect(() => {
-    const id = setInterval(() => setT(remain()), 1000);
-    return () => clearInterval(id);
-  }, []);
+// Presentational only — parent owns the ticking state.
+function Countdown({ t }) {
   const cells = [
     { n: t.d, l: "Days" }, { n: t.h, l: "Hours" },
     { n: t.m, l: "Mins" }, { n: t.s, l: "Secs" },
@@ -39,8 +35,20 @@ function Countdown() {
 
 export default function LuckyDrawPromo() {
   const { active, openRegistration, openResults } = useLuckyDraw();
+  const [t, setT] = useState(remain());
+  const [live, setLive] = useState(resultsAreLive());
+
+  // Tick once per second; flip to "live" at the results moment and stop.
+  useEffect(() => {
+    if (live) return;
+    const id = setInterval(() => {
+      if (resultsAreLive()) { setLive(true); clearInterval(id); }
+      else setT(remain());
+    }, 1000);
+    return () => clearInterval(id);
+  }, [live]);
+
   if (!active) return null;
-  const live = resultsAreLive();
 
   return (
     <section className="relative overflow-hidden bg-ink-950 py-16 sm:py-20">
@@ -86,7 +94,7 @@ export default function LuckyDrawPromo() {
               <p className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
                 Winners announced in
               </p>
-              <Countdown />
+              <Countdown t={t} />
             </>
           )}
         </Reveal>

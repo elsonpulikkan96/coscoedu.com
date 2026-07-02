@@ -31,8 +31,13 @@ export function LuckyDrawProvider({ children }) {
   // every device at the stall.
   const register = useCallback((data) => {
     const lots = new Set(entries.map((e) => e.lot));
+    // 5-digit space (10000–99999) to cut collisions; capped retries so a
+    // full local set can never spin the tab. Backend should still own the
+    // authoritative lot number across devices.
     let lot;
-    do { lot = `${LOT_PREFIX}-${Math.floor(1000 + Math.random() * 9000)}`; } while (lots.has(lot));
+    let tries = 0;
+    do { lot = `${LOT_PREFIX}-${Math.floor(10000 + Math.random() * 90000)}`; tries += 1; }
+    while (lots.has(lot) && tries < 50);
     const entry = { lot, ...data, time: new Date().toISOString() };
     persist([...entries, entry]);
     saveEntry(entry); // backend hook (stub)

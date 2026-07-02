@@ -98,7 +98,7 @@ export default function ResultsModal({ onClose }) {
             <div className="ld-code">COSCOEDU.COM</div>
           </div>
         </div>
-        {result?.win && <Confetti />}
+        {result?.win && <Confetti key={result.lot} />}
       </div>
     </div>,
     document.body
