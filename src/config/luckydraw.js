@@ -7,8 +7,8 @@ import { submitLuckyDrawEntry } from "../lib/leads";
 
 // When winners go live (IST). Before this the results panel shows a
 // countdown; on/after it, the lot-number lookup opens.
-export const RESULTS_DATE = new Date("2026-07-10T10:00:00+05:30");
-export const RESULTS_DATE_LABEL = "July 10"; // human-facing copy
+export const RESULTS_DATE = new Date("2026-07-20T10:00:00+05:30");
+export const RESULTS_DATE_LABEL = "July 20"; // human-facing copy
 
 // How long after RESULTS_DATE the campaign UI keeps showing (a claim
 // window). Once past this, the launcher + auto-popup stop appearing.
