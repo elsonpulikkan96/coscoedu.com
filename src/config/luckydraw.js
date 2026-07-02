@@ -27,13 +27,13 @@ export const STAFF_PIN = "2026";
 
 // Prizes shown on the ticket + homepage promo + emails.
 export const PRIZES = [
-  { icon: "✈️", label: "Flight ticket" },
+  { icon: "📱", label: "iPhone 17" },
   { icon: "💻", label: "Laptop" },
-  { icon: "🛂", label: "Free visa assistance" },
+  { icon: "✈️", label: "Flight ticket" },
+  { icon: "🛂", label: "Visa assistance" },
+  { icon: "🎓", label: "Free scholarship application" },
+  { icon: "💸", label: "Fee waiver" },
   { icon: "📚", label: "Free IELTS coaching" },
-  { icon: "🎬", label: "Movie tickets" },
-  { icon: "🧳", label: "Trolley bag" },
-  { icon: "🎁", label: "Amazon vouchers" },
 ];
 
 // Options in the "preferred country" dropdown.
