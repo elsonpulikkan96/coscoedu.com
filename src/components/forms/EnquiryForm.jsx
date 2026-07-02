@@ -3,6 +3,7 @@ import { FiCheckCircle, FiAlertCircle } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { whatsappLink } from "../../config/site";
 import { destinations } from "../../data/destinations";
+import { submitEnquiry } from "../../lib/leads";
 
 const empty = { name: "", email: "", phone: "", destination: "", message: "" };
 
@@ -20,15 +21,24 @@ export default function EnquiryForm({ compact = false, title = "Book your free c
     return "";
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const v = validate();
     if (v) { setError(v); return; }
     setError("");
     setStatus("loading");
-    // No backend yet — simulate, then surface a WhatsApp handoff so the lead is captured.
-    // TODO: POST to your CRM / email endpoint here.
-    setTimeout(() => setStatus("success"), 1100);
+    // Save the lead to Supabase (the admin app reads it + the team is
+    // emailed). WhatsApp handoff below still works as a fast fallback,
+    // and if Supabase isn't configured this is a graceful no-op.
+    await submitEnquiry({
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      destination: data.destination || null,
+      message: data.message || null,
+      source: "website",
+    });
+    setStatus("success");
   };
 
   if (status === "success") {

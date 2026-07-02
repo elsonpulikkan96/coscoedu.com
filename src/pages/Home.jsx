@@ -1,6 +1,7 @@
 import { useSeo } from "../hooks/useSeo";
 import Hero from "../components/home/Hero";
 import TrustBar from "../components/home/TrustBar";
+import LuckyDrawPromo from "../components/home/LuckyDrawPromo";
 import DestinationsSection from "../components/home/DestinationsSection";
 import WhyChooseUs from "../components/home/WhyChooseUs";
 import ServicesSection from "../components/home/ServicesSection";
@@ -20,6 +21,7 @@ export default function Home() {
     <>
       <Hero />
       <TrustBar />
+      <LuckyDrawPromo />
       <DestinationsSection />
       <WhyChooseUs />
       <ServicesSection />

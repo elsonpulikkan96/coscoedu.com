@@ -15,6 +15,19 @@ dist
 dist-ssr
 *.local
 
+# Env / secrets — never commit real values (.env.local matched by *.local above)
+.env
+.env.*
+!.env.example
+# .env.production holds ONLY the public publishable key (safe to ship — it is
+# served to every browser anyway; RLS prevents reads). Committed so the CI
+# build connects to Supabase without needing repo secrets.
+!.env.production
+
+# Admin app is a SEPARATE project/repo (Cosco-Website-Admin) — do not
+# commit it into the coscoedu.com website repo.
+/cosco-admin-webapp/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
