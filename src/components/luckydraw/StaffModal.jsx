@@ -16,7 +16,7 @@ function downloadCSV(entries) {
 
 export default function StaffModal({ entries, onClose, onClear }) {
   return createPortal(
-    <div className="ld-overlay" role="dialog" aria-modal="true"
+    <div className="ld-overlay" data-lenis-prevent role="dialog" aria-modal="true"
       aria-label="Staff registrations panel" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className="ld-modal ld-staff">
         <button className="ld-close" aria-label="Close" onClick={onClose}>×</button>

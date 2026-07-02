@@ -50,7 +50,7 @@ export default function RegistrationModal({ entries, onRegister, onClose, onResu
   const field = (key) => `ld-field${errors[key] ? " ld-invalid" : ""}`;
 
   return createPortal(
-    <div className="ld-overlay" role="dialog" aria-modal="true"
+    <div className="ld-overlay" data-lenis-prevent role="dialog" aria-modal="true"
       aria-label="Cosco Mega Lucky Draw registration" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className="ld-modal">
         <button className="ld-close" aria-label="Close" onClick={onClose}>×</button>
@@ -100,18 +100,19 @@ export default function RegistrationModal({ entries, onRegister, onClose, onResu
                 {errors.email && <div className="ld-err">{errors.email}</div>}
               </div>
 
-              <div className="ld-field">
-                <label htmlFor="ld-country">Preferred country</label>
-                <select id="ld-country" value={form.country} onChange={set("country")}>
-                  {COUNTRIES.map((c) => <option key={c}>{c}</option>)}
-                </select>
-              </div>
-
-              <div className={field("course")}>
-                <label htmlFor="ld-course">Course you're interested in</label>
-                <input id="ld-course" type="text" maxLength={80}
-                  placeholder="e.g. MSc Nursing, MBA, B.Tech CS" value={form.course} onChange={set("course")} />
-                {errors.course && <div className="ld-err">{errors.course}</div>}
+              <div className="ld-row2">
+                <div className="ld-field">
+                  <label htmlFor="ld-country">Preferred country</label>
+                  <select id="ld-country" value={form.country} onChange={set("country")}>
+                    {COUNTRIES.map((c) => <option key={c}>{c}</option>)}
+                  </select>
+                </div>
+                <div className={field("course")}>
+                  <label htmlFor="ld-course">Course</label>
+                  <input id="ld-course" type="text" maxLength={80}
+                    placeholder="e.g. MSc Nursing" value={form.course} onChange={set("course")} />
+                  {errors.course && <div className="ld-err">{errors.course}</div>}
+                </div>
               </div>
 
               <button className="ld-cta" onClick={submit}>Get my lot number →</button>

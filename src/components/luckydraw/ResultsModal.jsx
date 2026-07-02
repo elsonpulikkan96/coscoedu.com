@@ -40,7 +40,7 @@ export default function ResultsModal({ onClose }) {
   }
 
   return createPortal(
-    <div className="ld-overlay" role="dialog" aria-modal="true"
+    <div className="ld-overlay" data-lenis-prevent role="dialog" aria-modal="true"
       aria-label="Check Lucky Draw results" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className="ld-modal">
         <button className="ld-close" aria-label="Close" onClick={onClose}>×</button>
