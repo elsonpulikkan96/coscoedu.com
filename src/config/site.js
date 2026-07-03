@@ -25,8 +25,10 @@ export const site = {
   },
 };
 
-export const whatsappLink = () =>
-  'https://wa.me/message/A3MRTASHMFEOE1';
+export const whatsappLink = (text) =>
+  text
+    ? `https://wa.me/917902844844?text=${encodeURIComponent(text)}`
+    : 'https://wa.me/message/A3MRTASHMFEOE1';
 
 // Headline metrics. TODO: replace with verified figures before launch.
 export const metrics = [

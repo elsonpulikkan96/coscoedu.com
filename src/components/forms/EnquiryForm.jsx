@@ -30,7 +30,7 @@ export default function EnquiryForm({ compact = false, title = "Book your free c
     // Save the lead to Supabase (the admin app reads it + the team is
     // emailed). WhatsApp handoff below still works as a fast fallback,
     // and if Supabase isn't configured this is a graceful no-op.
-    await submitEnquiry({
+    const result = await submitEnquiry({
       name: data.name,
       email: data.email,
       phone: data.phone,
@@ -38,6 +38,11 @@ export default function EnquiryForm({ compact = false, title = "Book your free c
       message: data.message || null,
       source: "website",
     });
+    if (result && !result.ok && !result.skipped) {
+      setError("Something went wrong. Please try WhatsApp or call us directly.");
+      setStatus("idle");
+      return;
+    }
     setStatus("success");
   };
 
